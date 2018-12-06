@@ -67,10 +67,13 @@ public class ThrottleFirstExampleActivity extends AppCompatActivity {
 
     public Observable<Boolean> enablePushNotifications(boolean enable) {
         SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        return Observable.fromCallable(() -> sharedPrefs
-                .edit()
-                .putBoolean(KEY_PUSH_NOTIFICATIONS_PREFS, enable)
-                .commit());
+        return Observable.fromCallable(() -> {
+            sharedPrefs
+                    .edit()
+                    .putBoolean(KEY_PUSH_NOTIFICATIONS_PREFS, enable)
+                    .apply();
+            return true;
+        });
     }
 
 
